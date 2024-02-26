@@ -56,6 +56,25 @@
 <h1>
     Hotels
 </h1>
+<form action="index.php" method="get" class="mb-5">
+    <label for="parking">L'hotel deve avere un parcheggio?</label>
+    <select name="parking">
+        <option value="false">NO</option>
+        <option value="true">SI</option>
+    </select>
+    <br>
+    <label for="voto">Voto minimo?</label>
+    <select name="voto">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <br>
+    <button>Filtra</button>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -73,21 +92,45 @@
     </thead>
     <tbody>
     <?php
+    $parkRequired = $_GET["parking"] ?? "false";
+    $minimumVote = $_GET["voto"] ?? 0;
     foreach($hotels as $stucture){
-        echo "<tr>";
-        foreach ($stucture as $attributes => $value){
-            if ($attributes == "parking"){
-                if ($value){
-                    echo "<td> SI </td>";
-                } else {
-                    echo "<td> NO </td>";
+        if($parkRequired == "true" && $stucture["parking"] == true){
+            if($stucture["vote"]>=$minimumVote){
+                echo "<tr>";
+                foreach ($stucture as $attributes => $value){
+                    if ($attributes == "parking"){
+                        if ($value){
+                            echo "<td> SI </td>";
+                        } else {
+                            echo "<td> NO </td>";
+                        }
+                    } else {
+                        echo "<td> {$value} </td>";
+                    }
                 }
-            } else{
-                echo "<td> {$value} </td>";
+                echo "</tr>";
+            }
+        } elseif ($parkRequired == "false") {
+            if($stucture["vote"]>=$minimumVote){
+                echo "<tr>";
+                foreach ($stucture as $attributes => $value){
+                    if ($attributes == "parking"){
+                        if ($value){
+                            echo "<td> SI </td>";
+                        } else {
+                            echo "<td> NO </td>";
+                        }
+                    } else {
+                        echo "<td> {$value} </td>";
+                    }
+                }
+                echo "</tr>";
             }
         }
-        echo "</tr>";
     }
+
+
     ?>
     </tbody>
 
