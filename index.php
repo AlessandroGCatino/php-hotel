@@ -92,26 +92,18 @@
     </thead>
     <tbody>
     <?php
+    
     $parkRequired = $_GET["parking"] ?? "false";
     $minimumVote = $_GET["voto"] ?? 0;
     foreach($hotels as $stucture){
-        if($parkRequired == "true" && $stucture["parking"] == true){
-            if($stucture["vote"]>=$minimumVote){
-                echo "<tr>";
-                foreach ($stucture as $attributes => $value){
-                    if ($attributes == "parking"){
-                        if ($value){
-                            echo "<td> SI </td>";
-                        } else {
-                            echo "<td> NO </td>";
-                        }
-                    } else {
-                        echo "<td> {$value} </td>";
-                    }
-                }
-                echo "</tr>";
+        $print = true;
+        if($parkRequired == "true"){
+            if ($stucture["parking"] == false)
+            {
+                $print = false;
             }
-        } elseif ($parkRequired == "false") {
+        }
+        if ($print) {
             if($stucture["vote"]>=$minimumVote){
                 echo "<tr>";
                 foreach ($stucture as $attributes => $value){
