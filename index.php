@@ -56,19 +56,22 @@
 <h1>
     Hotels
 </h1>
-<table>
-    <tr>
-        <?php
-        $keys = array_keys($hotels[0]);
-        foreach ($keys as $head){
-            if ($head != "distance_to_center"){
-                echo "<th> {$head} </th>";
-            } else {
-                echo "<th> distance to center </th>";
+<table class="table">
+    <thead>
+        <tr>
+            <?php
+            $keys = array_keys($hotels[0]);
+            foreach ($keys as $head){
+                if ($head != "distance_to_center"){
+                    echo "<th scope='col'> {$head} </th>";
+                } else {
+                    echo "<th scope='col'> distance to center </th>";
+                }
             }
-        }
-        ?>
-    </tr>
+            ?>
+        </tr>
+    </thead>
+    <tbody>
     <?php
     foreach($hotels as $stucture){
         echo "<tr>";
@@ -86,6 +89,7 @@
         echo "</tr>";
     }
     ?>
+    </tbody>
 
 </table>
 
